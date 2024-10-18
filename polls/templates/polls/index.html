@@ -6,7 +6,10 @@
     <title>Polls Index</title>
 </head>
 <body>
-    <h1>{{latest_question_list}}</h1>
+    {% extends 'base_generic.html' %}
+    {% block title %}Polls Index{% endblock %}
+    {% block content %}
+    <h1>Polls Index</h1>
     {% if latest_question_list %}
     <ul>
         {% for question in latest_question_list %}
@@ -16,5 +19,6 @@
     {% else %}
     <h2>No polls are available.</h2>
     {% endif %}
+    {% endblock %}
 </body>
 </html>

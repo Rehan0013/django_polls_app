@@ -1,0 +1,8 @@
+# python
+*.pyc
+__pycache__/
+
+# Django 
+*.log
+db.sqlite3
+
