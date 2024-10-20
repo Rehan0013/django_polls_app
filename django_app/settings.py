@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import dj_database_url
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-gn_%e1+tx*ab+s(&4w*xn6#1*^qcjex)$z!1h-d2we226(_r#+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -40,9 +40,17 @@ INSTALLED_APPS = [
     'polls',
     'rest_framework',
     'accounts',
+    'corsheaders',
 ]
 
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+]
+
+# CORS_ALLOWED_ALL_ORIGINS = True
+
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -50,6 +58,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'django_app.middleware.LogRequestMiddleware',
+    'django_app.middleware.CustomHeaderMiddleware',
 ]
 
 ROOT_URLCONF = 'django_app.urls'
@@ -83,6 +93,7 @@ DATABASES = {
     }
 }
 
+DATABASES['default'] = dj_database_url.parse('postgresql://django_app_kuft_user:Y7NTv7Ot8Zas0JJciRQgv0sEh0TCXW2Z@dpg-csaa3j88fa8c73clrtog-a.singapore-postgres.render.com/django_app_kuft')
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

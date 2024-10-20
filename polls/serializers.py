@@ -2,10 +2,10 @@ from rest_framework import serializers
 from .models import Question, Choice
 
 class QuestionSerializer(serializers.ModelSerializer):
-    # owner = serializers.ReadOnlyField(source='owner.username')
+    owner = serializers.ReadOnlyField(source='owner.username')
     class Meta:
         model = Question
-        fields = ['id', 'question_text', 'pub_date']
+        fields = ['id', 'question_text', 'pub_date', 'owner']
 
 class ChoiceSerializer(serializers.ModelSerializer):
     question = QuestionSerializer(read_only=True)
@@ -18,9 +18,10 @@ class ChoiceSerializer(serializers.ModelSerializer):
 
 class QuestionSerializer(serializers.ModelSerializer):
     choices = ChoiceSerializer(many=True, read_only=True, source='choice_set')
+    owner = serializers.ReadOnlyField(source='owner.username')
     class Meta:
         model = Question
-        fields = ['id', 'question_text', 'pub_date' ,'choices']
+        fields = ['id', 'question_text', 'pub_date' ,'choices', 'owner']
 
 class QuestionListSerializer(serializers.ModelSerializer):
     class Meta:
