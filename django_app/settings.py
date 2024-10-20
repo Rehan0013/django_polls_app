@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import dj_database_url
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,13 +20,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-gn_%e1+tx*ab+s(&4w*xn6#1*^qcjex)$z!1h-d2we226(_r#+'
-
+# SECRET_KEY = 'django-insecure-gn_%e1+tx*ab+s(&4w*xn6#1*^qcjex)$z!1h-d2we226(_r#+'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', False).lower() == True
 
 ALLOWED_HOSTS = ['127.0.0.1']
-
 
 # Application definition
 
@@ -93,7 +92,10 @@ DATABASES = {
     }
 }
 
-DATABASES['default'] = dj_database_url.parse('postgresql://django_app_kuft_user:Y7NTv7Ot8Zas0JJciRQgv0sEh0TCXW2Z@dpg-csaa3j88fa8c73clrtog-a.singapore-postgres.render.com/django_app_kuft')
+# DATABASES['default'] = dj_database_url.parse('postgresql://django_app_kuft_user:Y7NTv7Ot8Zas0JJciRQgv0sEh0TCXW2Z@dpg-csaa3j88fa8c73clrtog-a.singapore-postgres.render.com/django_app_kuft')
+
+databaseURL = os.environ.get('DATABASE_URL')
+DATABASES['default'] = dj_database_url.pasre(databaseURL)
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
